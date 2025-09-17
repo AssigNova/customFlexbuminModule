@@ -29,3 +29,11 @@ custom_portal.hcp_form:
     _title: "HCP Portal"
   requirements:
     _permission: "access content"
+
+custom_portal.pincode_mapping:
+  path: "/admin/config/custom-portal/pincode-mapping"
+  defaults:
+    _form: '\Drupal\custom_portal\Form\PincodeMappingForm'
+    _title: "Pincode Mapping"
+  requirements:
+    _permission: "administer site configuration"

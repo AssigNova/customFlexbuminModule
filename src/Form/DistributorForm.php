@@ -51,11 +51,11 @@ class DistributorForm extends FormBase
 
     $pincode = $values['pincode'];
 
-    // Lookup email by pincode (replace with DB config)
-    $email_map = [
-      '110001' => 'delhi@example.com',
-      '560001' => 'bangalore@example.com',
-    ];
+    // Get the email map from the configuration file.
+    $config = $this->config('custom_portal.pincode_mapping');
+    $email_map = $config->get('pincode_mappings') ?: [];
+
+    // Lookup email by pincode
     $to = $email_map[$pincode] ?? 'default@example.com';
 
     $mailManager = \Drupal::service('plugin.manager.mail');
