@@ -48,23 +48,29 @@ class DistributorForm extends FormBase
   public function submitForm(array &$form, FormStateInterface $form_state)
   {
     $values = $form_state->getValues();
-
     $pincode = $values['pincode'];
 
-    // Get the email map from the configuration file.
     $config = $this->config('custom_portal.pincode_mapping');
     $email_map = $config->get('pincode_mappings') ?: [];
-
-    // Lookup email by pincode
     $to = $email_map[$pincode] ?? 'default@example.com';
 
-    $mailManager = \Drupal::service('plugin.manager.mail');
-    $params = [
-      'subject' => 'New Distributor Submission',
-      'message' => "Name: {$values['name']}\nEmail: {$values['email']}\nMessage: {$values['message']}",
-    ];
-    $mailManager->mail('custom_portal', 'distributor_form', $to, \Drupal::currentUser()->getPreferredLangcode(), $params);
+    $module = 'custom_portal';
+    $key = 'distributor_form';
+    $langcode = $this->currentUser()->getPreferredLangcode();
 
-    $this->messenger()->addMessage($this->t('Form submitted. Mail sent to @mail', ['@mail' => $to]));
+    // Params only contain the dynamic data, not the whole message.
+    $params = [
+      'name' => $values['name'],
+      'email' => $values['email'],
+      'message' => $values['message'],
+    ];
+
+    $result = $this->mailManager->mail($module, $key, $to, $langcode, $params);
+
+    if ($result['result'] !== true) {
+      $this->messenger()->addError($this->t('There was a problem sending your message.'));
+    } else {
+      $this->messenger()->addMessage($this->t('Form submitted. Mail sent to @mail', ['@mail' => $to]));
+    }
   }
 }

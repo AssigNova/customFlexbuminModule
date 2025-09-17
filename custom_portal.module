@@ -16,3 +16,17 @@ function custom_portal_theme($existing, $type, $theme, $path) {
     ],
   ];
 }
+
+/**
+ * Implements hook_mail().
+ */
+function custom_portal_mail($key, &$message, $params) {
+  switch ($key) {
+    case 'distributor_form':
+      $message['subject'] = t('New Distributor Submission');
+      $message['body'][] = "Name: {$params['name']}";
+      $message['body'][] = "Email: {$params['email']}";
+      $message['body'][] = "Message: {$params['message']}";
+      break;
+  }
+}
