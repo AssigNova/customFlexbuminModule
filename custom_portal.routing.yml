@@ -1,0 +1,31 @@
+custom_portal.page:
+  path: "/portal"
+  defaults:
+    _controller: '\Drupal\custom_portal\Controller\PortalController::content'
+    _title: "Welcome"
+  requirements:
+    _permission: "access content"
+
+custom_portal.patient_form:
+  path: "/portal/patient"
+  defaults:
+    _form: '\Drupal\custom_portal\Form\PatientForm'
+    _title: "Patient Portal"
+  requirements:
+    _permission: "access content"
+
+custom_portal.distributor_form:
+  path: "/portal/distributor"
+  defaults:
+    _form: '\Drupal\custom_portal\Form\DistributorForm'
+    _title: "Distributor Portal"
+  requirements:
+    _permission: "access content"
+
+custom_portal.hcp_form:
+  path: "/portal/hcp"
+  defaults:
+    _form: '\Drupal\custom_portal\Form\HcpForm'
+    _title: "HCP Portal"
+  requirements:
+    _permission: "access content"

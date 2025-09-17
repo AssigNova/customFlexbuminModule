@@ -1,0 +1,10 @@
+{# templates/portal-options-page.html.twig #}
+<div class="portal-background">
+  <div class="portal-cards">
+    {% for link in links %}
+      <div class="portal-card">
+        <a href="{{ link.url.toString() }}">{{ link.title }}</a>
+      </div>
+    {% endfor %}
+  </div>
+</div>

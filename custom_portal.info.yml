@@ -1,0 +1,7 @@
+name: Custom Portal
+type: module
+description: Custom page with Patient, Distributor, and HCP forms.
+core_version_requirement: ^10
+package: Custom
+dependencies:
+  - drupal:system
